@@ -1,0 +1,18 @@
+# Dependencias para DocToPDF-Manager
+# Interfaz gráfica moderna
+PyQt5==5.15.10
+
+# Procesamiento de PDFs
+PyMuPDF==1.23.8
+PyPDF2==3.0.1
+
+# Integración con Microsoft Word (opcional)
+comtypes==1.2.0
+pywin32==306
+
+# Conversión alternativa sin Microsoft Word
+docx2txt==0.8
+reportlab==4.0.4
+
+# Utilidades adicionales
+pathlib
