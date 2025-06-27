@@ -152,3 +152,57 @@ def get_file_size_mb(file_path: str) -> Optional[float]:
         logger = get_logger("file_utils")
         logger.warning(f"No se pudo obtener el tamaño del archivo {file_path}: {str(e)}")
         return None
+
+
+def get_resource_path(relative_path: str) -> str:
+    """
+    Obtiene la ruta absoluta a un recurso, funciona tanto en desarrollo como en ejecutable.
+    
+    Args:
+        relative_path: Ruta relativa al recurso desde el directorio base
+        
+    Returns:
+        Ruta absoluta al recurso
+    """
+    try:
+        # Si estamos ejecutando desde PyInstaller
+        import sys
+        if hasattr(sys, '_MEIPASS'):
+            # Ejecutando desde el ejecutable
+            base_path = sys._MEIPASS
+        else:
+            # Ejecutando desde código fuente
+            base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+        return os.path.join(base_path, relative_path)
+    except Exception as e:
+        logger = get_logger("file_utils")
+        logger.warning(f"Error obteniendo ruta de recurso {relative_path}: {str(e)}")
+        return relative_path
+
+
+def get_app_icon() -> Optional[str]:
+    """
+    Obtiene la ruta al icono de la aplicación.
+    
+    Returns:
+        Ruta al icono si existe, None en caso contrario
+    """
+    icon_path = get_resource_path("resources/pdf.ico")
+    if os.path.exists(icon_path):
+        return icon_path
+    
+    # Fallback para diferentes ubicaciones posibles
+    fallback_paths = [
+        "resources/pdf.ico",
+        "pdf.ico",
+        os.path.join(os.path.dirname(__file__), "..", "..", "resources", "pdf.ico")
+    ]
+    
+    for path in fallback_paths:
+        if os.path.exists(path):
+            return os.path.abspath(path)
+    
+    logger = get_logger("file_utils")
+    logger.warning("No se pudo encontrar el icono de la aplicación")
+    return None

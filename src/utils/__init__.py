@@ -8,7 +8,9 @@ from .file_utils import (
     validate_file_extension,
     create_output_directory,
     safe_file_removal,
-    get_file_size_mb
+    get_file_size_mb,
+    get_resource_path,
+    get_app_icon
 )
 
 try:
@@ -23,7 +25,9 @@ __all__ = [
     'validate_file_extension', 
     'create_output_directory',
     'safe_file_removal',
-    'get_file_size_mb'
+    'get_file_size_mb',
+    'get_resource_path',
+    'get_app_icon'
 ]
 
 if STYLES_AVAILABLE:

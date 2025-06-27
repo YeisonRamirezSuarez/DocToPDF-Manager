@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QApplication
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from src.presenters import MainPresenter
-from src.utils import setup_logging, get_logger
+from src.utils import setup_logging, get_logger, get_app_icon
 
 
 def main():
@@ -24,6 +24,13 @@ def main():
         
         # Crear aplicación Qt
         app = QApplication(sys.argv)
+        
+        # Configurar icono de la aplicación
+        icon_path = get_app_icon()
+        if icon_path:
+            from PyQt5.QtGui import QIcon
+            app.setWindowIcon(QIcon(icon_path))
+            logger.info(f"Icono de aplicación configurado globalmente: {icon_path}")
         
         # Configurar estilo de la aplicación
         app.setStyle('Fusion')  # Estilo moderno

@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer, QPropertyAnimation, QEasingCurve, QUrl
 from PyQt5.QtGui import QFont, QPixmap, QIcon, QPalette, QColor, QLinearGradient, QDragEnterEvent, QDropEvent
-from src.utils import get_logger
+from src.utils import get_logger, get_app_icon
 
 logger = get_logger("main_view")
 
@@ -297,13 +297,13 @@ class MainView(QMainWindow):
         self.setFixedSize(650, 620)
         self._center_window()
         
-        # Configurar icono si existe
-        try:
-            icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources', 'pdf.ico')
-            if os.path.exists(icon_path):
-                self.setWindowIcon(QIcon(icon_path))
-        except:
-            pass
+        # Configurar icono de la aplicación
+        icon_path = get_app_icon()
+        if icon_path:
+            self.setWindowIcon(QIcon(icon_path))
+            logger.info(f"Icono de aplicación configurado: {icon_path}")
+        else:
+            logger.warning("No se pudo configurar el icono de la aplicación")
         
         # Aplicar estilo de ventana con gradiente
         self.setStyleSheet("""

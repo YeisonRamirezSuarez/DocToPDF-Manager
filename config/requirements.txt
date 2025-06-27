@@ -14,5 +14,3 @@ pywin32==306
 docx2txt==0.8
 reportlab==4.0.4
 
-# Utilidades adicionales
-pathlib
